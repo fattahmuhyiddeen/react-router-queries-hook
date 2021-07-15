@@ -7,7 +7,8 @@ export default (key, defaultValue) => {
   const value = q.get(key) || defaultValue;
   const setValue = v => {
     const queries = new URLSearchParams(window.location.search);
-    queries.set(key, v);
+    if (typeof v === 'undefined' || v == null || v === '') queries.delete(key);
+    else queries.set(key, v);
     history.push({
       pathname: window.location.pathname,
       search: `?${queries.toString()}`,
